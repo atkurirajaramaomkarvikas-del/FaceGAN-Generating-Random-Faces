@@ -14,9 +14,9 @@ def home():
     noise = np.random.normal(np.random.normal(0,1,(1,100)))
     img = (generator.predict(noise)[0]/2)+0.5
     img = np.clip(img,0,1)
-    plt.imsave('temp/temp.png',img)
+    plt.imsave('app/temp/temp.png',img)
     encoded_string=''
-    with open("temp/temp.png", "rb") as image_file:
+    with open("app/temp/temp.png", "rb") as image_file:
         encoded_string += str(base64.b64encode(image_file.read()))[2:-1]
     return render_template('facegen.html',data = {'img':encoded_string})
 
@@ -26,6 +26,6 @@ def getStaticFiles(path):
     return send_from_directory(os.curdir, path)
 
 if __name__ == "__main__":
-    generator = Generator('../saved_weights/generator_weights.h5')
+    generator = Generator('saved_weights/generator_weights.h5')
     print('Generator Built!! You are ready with app.')
     app.run(host = '0.0.0.0',port = int(5000))
